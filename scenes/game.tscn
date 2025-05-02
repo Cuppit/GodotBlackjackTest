@@ -1,0 +1,302 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5xgcudfj4bm7"]
+
+[ext_resource type="Script" uid="uid://colutbt5jud2n" path="res://script/game_manager.gd" id="1_erk3m"]
+[ext_resource type="Script" uid="uid://cmb6ktjjvyn8i" path="res://script/dealer.gd" id="2_6kxq0"]
+[ext_resource type="Script" uid="uid://tgi7wdy6f7ax" path="res://script/player.gd" id="3_tpfxx"]
+[ext_resource type="Texture2D" uid="uid://76v5udfahner" path="res://assets/images/cards/chip_5.png" id="4_u5sy4"]
+[ext_resource type="Texture2D" uid="uid://w0hw3vjdqxxh" path="res://assets/images/cards/chip_10.png" id="5_gee14"]
+[ext_resource type="Texture2D" uid="uid://bcyxflhmvsklm" path="res://assets/images/cards/chip_25.png" id="6_0tnpc"]
+[ext_resource type="Texture2D" uid="uid://biww65riw2ph3" path="res://assets/images/cards/chip_100.png" id="7_vtaks"]
+[ext_resource type="Texture2D" uid="uid://1wfup8yfxf71" path="res://assets/images/ui/money-icon-transparent-background-25.png" id="8_gee14"]
+
+[node name="GameScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_erk3m")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="TableCenter" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DealerArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 50.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+script = ExtResource("2_6kxq0")
+
+[node name="DealerLabel" type="Label" parent="DealerArea"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.5
+offset_right = 42.5
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "DEALER"
+horizontal_alignment = 1
+
+[node name="DealerScore" type="Label" parent="DealerArea"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 26.0
+grow_horizontal = 0
+text = "0"
+horizontal_alignment = 2
+
+[node name="DealerCards" type="HBoxContainer" parent="DealerArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="PlayerArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("3_tpfxx")
+
+[node name="PlayerLabel" type="Label" parent="PlayerArea"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.5
+offset_right = 42.5
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "PLAYER"
+horizontal_alignment = 1
+
+[node name="PlayerScore" type="Label" parent="PlayerArea"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 26.0
+grow_horizontal = 0
+text = "0"
+horizontal_alignment = 2
+
+[node name="PlayerCards" type="HBoxContainer" parent="PlayerArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="BettingArea" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ChipsContainer" type="HBoxContainer" parent="BettingArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -30.0
+offset_right = 200.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Chip5" type="TextureButton" parent="BettingArea/ChipsContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture_normal = ExtResource("4_u5sy4")
+
+[node name="Chip10" type="TextureButton" parent="BettingArea/ChipsContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture_normal = ExtResource("5_gee14")
+
+[node name="Chip25" type="TextureButton" parent="BettingArea/ChipsContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture_normal = ExtResource("6_0tnpc")
+
+[node name="Chip100" type="TextureButton" parent="BettingArea/ChipsContainer"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+texture_normal = ExtResource("7_vtaks")
+
+[node name="BetAmount" type="Label" parent="BettingArea"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -44.0
+offset_right = 44.0
+offset_bottom = 26.0
+grow_horizontal = 2
+text = "BET: $0"
+horizontal_alignment = 1
+
+[node name="GameControls" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -347.0
+offset_top = -166.0
+offset_right = -20.0
+offset_bottom = -106.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 15
+alignment = 2
+
+[node name="DealButton" type="Button" parent="GameControls"]
+custom_minimum_size = Vector2(70, 60)
+layout_mode = 2
+text = "DEAL"
+
+[node name="HitButton" type="Button" parent="GameControls"]
+custom_minimum_size = Vector2(70, 60)
+layout_mode = 2
+disabled = true
+text = "HIT"
+
+[node name="StandButton" type="Button" parent="GameControls"]
+custom_minimum_size = Vector2(70, 60)
+layout_mode = 2
+disabled = true
+text = "STAND"
+
+[node name="DoubleButton" type="Button" parent="GameControls"]
+custom_minimum_size = Vector2(70, 60)
+layout_mode = 2
+disabled = true
+text = "DOUBLE"
+
+[node name="PlayerInfo" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -166.0
+offset_right = 220.0
+offset_bottom = -106.0
+grow_vertical = 0
+
+[node name="MoneyIcon" type="TextureRect" parent="PlayerInfo"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("8_gee14")
+
+[node name="MoneyLabel" type="Label" parent="PlayerInfo"]
+layout_mode = 2
+text = "$1000"
+vertical_alignment = 1
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="GameMessage" type="Label" parent="UI"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -13.0
+offset_right = 100.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButton" type="Button" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -100.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 60.0
+grow_horizontal = 0
+text = "MENU"
+
+[node name="SoundFX" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="BettingArea/ChipsContainer/Chip5" to="." method="_on_chip_5_pressed"]
+[connection signal="pressed" from="BettingArea/ChipsContainer/Chip10" to="." method="_on_chip_10_pressed"]
+[connection signal="pressed" from="BettingArea/ChipsContainer/Chip25" to="." method="_on_chip_25_pressed"]
+[connection signal="pressed" from="BettingArea/ChipsContainer/Chip100" to="." method="_on_chip_100_pressed"]
+[connection signal="pressed" from="GameControls/DealButton" to="." method="_on_deal_button_pressed"]
+[connection signal="pressed" from="GameControls/HitButton" to="." method="_on_hit_button_pressed"]
+[connection signal="pressed" from="GameControls/StandButton" to="." method="_on_stand_button_pressed"]
+[connection signal="pressed" from="GameControls/DoubleButton" to="." method="_on_double_button_pressed"]
+[connection signal="pressed" from="UI/MenuButton" to="." method="_on_menu_button_pressed"]
