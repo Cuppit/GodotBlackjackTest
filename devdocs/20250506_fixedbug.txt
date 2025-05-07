@@ -1,0 +1,1 @@
+There was a bug where the player's bet ("current_bet") in the script "game_manager.gd" would reset to 0 as the hands were dealt.  a simple workaround was implemented where the bet value is held in a buffer variable before "init_game()" prematurely resets it.  

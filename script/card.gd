@@ -28,7 +28,6 @@ func initialize(card_suit, card_value, face_down = false):
 	# Load the appropriate texture for the card front
 	var card_texture = load("res://assets/images/cards/" + suit + "_" + value + ".png")
 	if card_texture:
-		print(card_front)
 		card_front.texture = card_texture
 	
 	# Set initial state

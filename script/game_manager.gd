@@ -18,10 +18,10 @@ var is_dealing = false
 @onready var bet_label = $BettingArea/BetAmount
 @onready var money_label = $PlayerInfo/MoneyLabel
 @onready var game_message = $UI/GameMessage
-@onready var hit_button = $GameControls/HitButton
-@onready var stand_button = $GameControls/StandButton
-@onready var double_button = $GameControls/DoubleButton
-@onready var deal_button = $GameControls/DealButton
+@onready var hit_button = $VBoxContainer/GameControls/HitButton
+@onready var stand_button = $VBoxContainer/GameControls/StandButton
+@onready var double_button = $VBoxContainer/GameControls/DoubleButton
+@onready var deal_button = $VBoxContainer/GameControls/DealButton
 @onready var sound_fx = $SoundFX
 
 # Card scene reference - you'll need to create this
@@ -32,6 +32,7 @@ func _ready():
 	money_label.text = "$" + str(player_money)
 	init_game()
 
+# Now with emoji comments 👺
 func _process(_delta):
 	update_ui_info()
 
@@ -63,7 +64,7 @@ func create_deck():
 	
 	# Shuffle the deck
 	deck.shuffle()
-
+	
 func clear_cards():
 	# Remove all cards from player and dealer areas
 	for child in player_cards.get_children():
@@ -119,9 +120,24 @@ func update_ui_info():
 	$PlayerArea/PlayerScore.text = "HAND VALUE: "+str(calculate_score(player_cards))
 	$DealerArea/DealerScore.text=  "HAND VALUE: "+str(calculate_score(dealer_cards))
 	
+	# Only show chips if in the betting phase
+	if current_state == GameState.BETTING:
+		$BettingArea.visible = true
+	else:
+		$BettingArea.visible = false
+	
 	# Check which buttons are available
 	if (current_state == GameState.BETTING) && (current_bet > 0):
-		$GameControls/DealButton.disabled = false
+		$VBoxContainer/GameControls/DealButton.disabled = false
+	
+	if (current_state == GameState.GAME_OVER):
+		if (player_money > 0):
+			$VBoxContainer/ReplayControls.visible = true
+		else:
+			$UI/GameMessage.text = "OUT OF MONEY!  GAME OVER!"
+	else:
+		$VBoxContainer/ReplayControls.visible = false
+		
 
 func increase_bet(amount):
 	if player_money >= amount:
@@ -257,15 +273,19 @@ func dealer_turn():
 		# Add a brief delay for animation
 		await get_tree().create_timer(1.0).timeout
 	
+	print("NOW DETERMINING WINNER in dealer_turn():")
 	determine_winner()
 
 func determine_winner():
+	print("Now determining the winner of this round.  Current Bet was:",current_bet)
 	var player_score = int(player_score_label.text)
 	var dealer_score = int(dealer_score_label.text)
 	
 	if dealer_score > 21:
 		# Dealer busts
+		print("Player wins!")
 		player_money += current_bet * 2
+		print("Player money is now: ",player_money,", current_bet is: ",current_bet)
 		money_label.text = "$" + str(player_money)
 		end_game("Dealer busts! You win $" + str(current_bet))
 	elif dealer_score > player_score:
@@ -318,7 +338,9 @@ func _on_chip_pressed(value):
 
 func _on_deal_button_pressed():
 	if current_bet > 0:
+		var buf=current_bet # simple workaround for bug where "init_game" clears current_bet too early in the game process
 		init_game()
+		current_bet =buf
 		deal_initial_cards()
 		current_state = GameState.PLAYER_TURN
 		deal_button.disabled = true
@@ -352,3 +374,11 @@ func _on_chip_25_pressed():
 
 func _on_chip_100_pressed():
 	increase_bet(100)
+
+
+func _on_yes_button_pressed():
+	init_game()
+
+
+func _on_no_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/title_screen.tscn")
